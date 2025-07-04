@@ -23,6 +23,8 @@
  */
 package net.pl3x.map.bukkit;
 
+import com.earth2me.essentials.Essentials;
+import com.earth2me.essentials.User;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -37,6 +39,7 @@ import net.pl3x.map.core.Pl3xMap;
 import net.pl3x.map.core.markers.Point;
 import net.pl3x.map.core.player.Player;
 import net.pl3x.map.core.world.World;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -135,6 +138,20 @@ public class BukkitPlayer extends Player {
     @Override
     public boolean isInvisible() {
         return getPlayer().isInvisible();
+    }
+
+    @Override
+    public boolean isHidden() {
+        if(Bukkit.getPluginManager().isPluginEnabled("Essentials")){
+            Essentials essentials = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
+            if(essentials != null) {
+                User user = essentials.getUser(this.getUUID());
+                if(user != null && user.isVanished()){
+                    return true;
+                }
+            }
+        }
+        return super.isHidden();
     }
 
     @Override

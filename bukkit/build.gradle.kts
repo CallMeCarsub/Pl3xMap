@@ -27,6 +27,7 @@ repositories {
     }
     mavenCentral()
     maven("https://jitpack.io")
+    maven("https://repo.essentialsx.net/releases/")
 }
 
 dependencies {
@@ -38,6 +39,10 @@ dependencies {
     implementation(libs.adventurePlatformBukkit)
 
     paperweight.paperDevBundle(libs.versions.bukkit)
+    compileOnly("net.essentialsx:EssentialsX:2.21.1") {
+        exclude("org.spigotmc")
+        exclude("io.papermc.paper")
+    }
 }
 
 tasks {
