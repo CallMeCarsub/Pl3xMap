@@ -34,6 +34,7 @@ import java.util.UUID;
 import java.util.function.Supplier;
 import net.pl3x.map.core.Pl3xMap;
 import net.pl3x.map.core.configuration.PlayersLayerConfig;
+import net.pl3x.map.core.markers.Point;
 import net.pl3x.map.core.registry.Registry;
 import net.pl3x.map.core.util.Preconditions;
 import org.jspecify.annotations.NullMarked;
@@ -120,8 +121,8 @@ public class PlayerRegistry extends Registry<Player> {
             playerEntry.put("name", player.getDecoratedName());
             playerEntry.put("uuid", player.getUUID().toString());
             playerEntry.put("displayName", player.getDecoratedName());
-            playerEntry.put("world", player.getWorld().getName());
-            playerEntry.put("position", player.getPosition());
+            playerEntry.put("world", "nope :)");
+            playerEntry.put("position", Point.ZERO);
 
             players.add(playerEntry);
         });

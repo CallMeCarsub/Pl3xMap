@@ -27,7 +27,10 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 import javax.imageio.ImageIO;
 import net.pl3x.map.core.Pl3xMap;
@@ -52,6 +55,7 @@ public class PlayersLayer extends WorldLayer {
     public static final String KEY = "pl3xmap_players";
 
     private final String icon;
+    private final Map<UUID, UUID> playerUUIDRemap = new ConcurrentHashMap<>();
 
     /**
      * Create a new players layer.
@@ -113,7 +117,8 @@ public class PlayersLayer extends WorldLayer {
     }
 
     private Icon createIcon(Player player) {
-        Icon icon = Marker.icon(player.getUUID().toString(), player.getPosition(), this.icon, 16)
+        this.playerUUIDRemap.putIfAbsent(player.getUUID(), UUID.randomUUID());
+        Icon icon = Marker.icon(this.playerUUIDRemap.get(player.getUUID()).toString(), player.getPosition(), this.icon, 16)
                 .setRotationAngle((double) player.getYaw())
                 .setRotationOrigin("center")
                 .setPane("players");
