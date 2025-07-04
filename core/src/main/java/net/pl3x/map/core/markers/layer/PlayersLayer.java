@@ -55,7 +55,7 @@ public class PlayersLayer extends WorldLayer {
     public static final String KEY = "pl3xmap_players";
 
     private final String icon;
-    private final Map<UUID, UUID> playerUUIDRemap = new ConcurrentHashMap<>();
+    //private final Map<UUID, UUID> playerUUIDRemap = new ConcurrentHashMap<>();
 
     /**
      * Create a new players layer.
@@ -117,8 +117,8 @@ public class PlayersLayer extends WorldLayer {
     }
 
     private Icon createIcon(Player player) {
-        this.playerUUIDRemap.putIfAbsent(player.getUUID(), UUID.randomUUID());
-        Icon icon = Marker.icon(this.playerUUIDRemap.get(player.getUUID()).toString(), player.getPosition(), this.icon, 16)
+        //this.playerUUIDRemap.putIfAbsent(player.getUUID(), UUID.randomUUID());
+        Icon icon = Marker.icon(UUID.randomUUID().toString(), player.getPosition(), this.icon, 16)
                 .setRotationAngle((double) player.getYaw())
                 .setRotationOrigin("center")
                 .setPane("players");
