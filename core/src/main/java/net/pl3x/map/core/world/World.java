@@ -254,7 +254,7 @@ public abstract class World extends Keyed {
     }
 
     public Point getSpawn() {
-        return this.spawn;
+        return Point.ZERO;//this.spawn;
     }
 
     public int getSkylight() {

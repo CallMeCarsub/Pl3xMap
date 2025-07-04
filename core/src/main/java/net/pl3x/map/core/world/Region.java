@@ -99,6 +99,9 @@ public class Region {
                 return this.chunks[index] = new EmptyChunk(getWorld(), this);
             }
         }
+        if(chunk.getInhabitedTime() <= 6000){
+            return this.chunks[index] = new EmptyChunk(getWorld(), this);
+        }
         return chunk;
     }
 
