@@ -135,13 +135,7 @@ public class BukkitPlayer extends Player {
         }
     }
 
-    @Override
-    public boolean isInvisible() {
-        return getPlayer().isInvisible();
-    }
-
-    @Override
-    public boolean isHidden() {
+    private boolean isVanished() {
         if(Bukkit.getPluginManager().isPluginEnabled("Essentials")){
             Essentials essentials = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
             if(essentials != null) {
@@ -151,7 +145,20 @@ public class BukkitPlayer extends Player {
                 }
             }
         }
-        return super.isHidden();
+        if(this.getPlayer().hasPermission("pl3xmap.hidden")){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isInvisible() {
+        return isVanished() || getPlayer().isInvisible();
+    }
+
+    @Override
+    public boolean isHidden() {
+        return isVanished() || super.isHidden();
     }
 
     @Override
