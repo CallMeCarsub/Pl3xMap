@@ -25,17 +25,10 @@ loom {
 }
 
 repositories {
-    maven("https://oss.sonatype.org/content/repositories/snapshots/") {
-        name = "sonatype-snapshots"
-        mavenContent {
-            snapshotsOnly()
-        }
-    }
-    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/") {
-        name = "s01-sonatype-snapshots"
-        mavenContent {
-            snapshotsOnly()
-        }
+    maven("https://repo.granny.dev/snapshots/")
+    maven("https://central.sonatype.com/repository/maven-snapshots/") {
+        name = "sonatypeSnapshots"
+        mavenContent { snapshotsOnly() }
     }
     maven("https://maven.fabricmc.net/")
     maven("https://jitpack.io")
@@ -55,8 +48,12 @@ dependencies {
     modImplementation(libs.cloudFabric)
     include(libs.cloudFabric)
 
-    modImplementation(libs.adventurePlatformFabric)
-    include(libs.adventurePlatformFabric)
+    modImplementation(libs.adventurePlatformFabric) {
+        exclude("net.kyori", "ansi") // TODO: temporary
+    }
+    include(libs.adventurePlatformFabric) {
+        exclude("net.kyori", "ansi") // TODO: temporary
+    }
 }
 
 tasks {

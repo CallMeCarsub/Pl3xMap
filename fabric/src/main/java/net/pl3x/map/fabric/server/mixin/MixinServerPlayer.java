@@ -23,8 +23,9 @@
  */
 package net.pl3x.map.fabric.server.mixin;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.pl3x.map.fabric.server.duck.AccessServerPlayer;
 import org.jspecify.annotations.NullMarked;
 import org.spongepowered.asm.mixin.Mixin;
@@ -41,15 +42,13 @@ public class MixinServerPlayer implements AccessServerPlayer {
     private boolean hidden;
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
-    private void addAdditionalSaveData(CompoundTag compoundTag, CallbackInfo info) {
-        compoundTag.putByte("pl3xmap.hidden", (byte) (this.hidden ? 1 : 0));
+    private void addAdditionalSaveData(ValueOutput valueOutput, CallbackInfo ci) {
+        valueOutput.putBoolean("pl3xmap.hidden", this.hidden);
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
-    private void readAdditionalSaveData(CompoundTag compoundTag, CallbackInfo info) {
-        if (compoundTag.contains("pl3xmap.hidden", 1)) {
-            this.hidden = compoundTag.getByte("pl3xmap.hidden") != (byte) 0;
-        }
+    private void readAdditionalSaveData(ValueInput valueInput, CallbackInfo ci) {
+        this.hidden = valueInput.getBooleanOr("pl3xmap.hidden", false);
     }
 
     @Override
